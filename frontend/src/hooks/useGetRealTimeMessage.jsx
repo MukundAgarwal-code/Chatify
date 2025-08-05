@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { setMessages } from "../redux/messageSlice";
 import { BASE_URL } from "..";
+import { io } from 'socket.io-client'
 
 const useGetRealTimeMessage = () => {
     const socket = io(`${BASE_URL}`, { withCredentials: true });
