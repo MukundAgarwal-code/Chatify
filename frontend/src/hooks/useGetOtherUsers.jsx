@@ -11,7 +11,12 @@ const useGetOtherUsers = () => {
         const fetchOtherUsers = async () => {
             try {
                 axios.defaults.withCredentials = true;
-                const res = await axios.get(`${BASE_URL}/api/v1/user`);
+                const res = await axios.get(`${BASE_URL}/api/v1/user`,
+                    {
+                        withCredentials: true,  // <— ensures cookies are sent
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
                 // store
                 console.log("other users -> ",res);
                 dispatch(setOtherUsers(res.data));
