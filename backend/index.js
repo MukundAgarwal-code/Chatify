@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 
 const corsOption={
-    origin:'http://localhost:3000',
+    origin:["http://localhost:3000", "https://chatify-one-steel.vercel.app"],
     credentials:true
 };
 app.use(cors(corsOption)); 
