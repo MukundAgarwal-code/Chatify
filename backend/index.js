@@ -13,16 +13,16 @@ dotenv.config({});
 const PORT = process.env.PORT || 5000;
 
 // middleware
-app.use(express.urlencoded({extended:true}));
-app.use(express.json()); 
-app.use(cookieParser());
-app.set("trust proxy", 1);
-
 const corsOption={
     origin:["http://localhost:3000", "https://chatify-one-steel.vercel.app"],
     credentials:true
 };
 app.use(cors(corsOption)); 
+app.set("trust proxy", 1);
+app.use(express.json()); 
+app.use(cookieParser());
+app.use(express.urlencoded({extended:true}));
+
 
 
 // routes
