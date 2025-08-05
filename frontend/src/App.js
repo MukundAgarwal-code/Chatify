@@ -9,6 +9,7 @@ import io from "socket.io-client";
 import { setSocket } from './redux/socketSlice';
 import { setOnlineUsers } from './redux/userSlice';
 import { BASE_URL } from '.';
+import { connectSocket, disconnectSocket } from "./socketClient";
 
 const router = createBrowserRouter([
   {
@@ -28,30 +29,39 @@ const router = createBrowserRouter([
 
 function App() { 
   const {authUser} = useSelector(store=>store.user);
-  const {socket} = useSelector(store=>store.socket);
+  // const {socket} = useSelector(store=>store.socket);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(authUser){
-      const socketio = io(`${BASE_URL}`, {
-          query:{
-            userId:authUser._id
-          }
-      });
-      dispatch(setSocket(socketio));
+  // useEffect(()=>{
+  //   if(authUser){
+  //     const socketio = io(`${BASE_URL}`, {
+  //         query:{
+  //           userId:authUser._id
+  //         }
+  //     });
+  //     dispatch(setSocket(socketio));
 
-      socketio?.on('getOnlineUsers', (onlineUsers)=>{
-        dispatch(setOnlineUsers(onlineUsers))
-      });
-      return () => socketio.close();
-    }else{
-      if(socket){
-        socket.close();
-        dispatch(setSocket(null));
-      }
-    }
+  //     socketio?.on('getOnlineUsers', (onlineUsers)=>{
+  //       dispatch(setOnlineUsers(onlineUsers))
+  //     });
+  //     return () => socketio.close();
+  //   }else{
+  //     if(socket){
+  //       socket.close();
+  //       dispatch(setSocket(null));
+  //     }
+  //   }
 
-  },[authUser]);
+  // },[authUser]);
+
+useEffect(() => {
+  if (authUser?._id) {
+    connectSocket(authUser._id);
+  } else {
+    disconnectSocket();
+  }
+  return () => disconnectSocket();
+}, [authUser]);
 
   return (
     <div className="p-4 h-screen flex items-center justify-center">
