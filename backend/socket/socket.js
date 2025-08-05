@@ -7,10 +7,11 @@ const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors :{
+    cors: {
         origin:["http://localhost:3000", "https://chatify-one-steel.vercel.app"],
         methods:['GET', 'POST'],
         credentials: true,
+        allowedHeaders: ["Content-Type"],
     },
 });
 
@@ -22,7 +23,7 @@ const userSocketMap = {}; // {userId->socketId}
 
 
 io.on('connection', (socket)=>{
-    const userId = socket.handshake.query.userId
+    const userId = socket.handshake.auth?.userId
     if(userId !== undefined){
         userSocketMap[userId] = socket.id;
     } 
