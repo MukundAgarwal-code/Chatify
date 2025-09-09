@@ -42,7 +42,7 @@ const Sidebar = () => {
             }
         }
         else{
-            dispatch(setOtherUsers([otherUsers]));
+            dispatch(setOtherUsers(otherUsers));
             setisSearch(true);
         }
     }
