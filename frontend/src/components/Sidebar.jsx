@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BiSearchAlt2 } from "react-icons/bi";
+import { BiSearchAlt2, BiX } from "react-icons/bi";
 import OtherUsers from './OtherUsers';
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ const Sidebar = () => {
     const [search, setSearch] = useState("");
     const {otherUsers} = useSelector(store=>store.user);
     const dispatch = useDispatch();
+    const [isSearch, setisSearch] = useState(false);
 
     const navigate = useNavigate();
 
@@ -31,11 +32,18 @@ const Sidebar = () => {
     }
     const searchSubmitHandler = (e) => {
         e.preventDefault();
-        const conversationUser = otherUsers?.find((user)=> user.fullName.toLowerCase().includes(search.toLowerCase()));
-        if(conversationUser){
-            dispatch(setOtherUsers([conversationUser]));
-        }else{
-            toast.error("User not found!");
+        if(!isSearch){
+            const conversationUser = otherUsers?.find((user)=> user.fullName.toLowerCase().includes(search.toLowerCase()));
+            if(conversationUser){
+                setisSearch(true);
+                dispatch(setOtherUsers([conversationUser]));
+            }else{
+                toast.error("User not found!");
+            }
+        }
+        else{
+            dispatch(setOtherUsers([otherUsers]));
+            setisSearch(true);
         }
     }
     return (
@@ -48,7 +56,8 @@ const Sidebar = () => {
                     placeholder='Search...'
                 />
                 <button type='submit' className='btn bg-zinc-700 text-white'>
-                    <BiSearchAlt2 className='w-6 h-6 outline-none'/>
+                    {(!isSearch) ? <BiSearchAlt2 className='w-6 h-6 outline-none'/> :
+                    <BiX className='w-6 h-6 outline-none'/>}
                 </button>
             </form>
             <div className="divider px-3"></div> 
