@@ -43,7 +43,7 @@ const Sidebar = () => {
         }
         else{
             dispatch(setOtherUsers(otherUsers));
-            setisSearch(true);
+            setisSearch(false);
         }
     }
     return (
