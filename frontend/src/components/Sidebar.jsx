@@ -12,8 +12,16 @@ import { BASE_URL } from '..';
 const Sidebar = () => {
     const [search, setSearch] = useState("");
     const {otherUsers} = useSelector(store=>store.user);
+    const [originalUsers, setoriginalUsers] = useState([]);
     const dispatch = useDispatch();
     const [isSearch, setisSearch] = useState(false);
+
+    useEffect(() => {
+        if (otherUsers) {
+            setoriginalUsers(otherUsers);
+        }
+    }, [otherUsers]);
+
 
     const navigate = useNavigate();
 
@@ -33,7 +41,7 @@ const Sidebar = () => {
     const searchSubmitHandler = (e) => {
         e.preventDefault();
         if(!isSearch){
-            const conversationUser = otherUsers?.find((user)=> user.fullName.toLowerCase().includes(search.toLowerCase()));
+            const conversationUser = originalUsers?.find((user)=> user.fullName.toLowerCase().includes(search.toLowerCase()));
             if(conversationUser){
                 setisSearch(true);
                 dispatch(setOtherUsers([conversationUser]));
@@ -42,7 +50,7 @@ const Sidebar = () => {
             }
         }
         else{
-            dispatch(setOtherUsers(otherUsers));
+            dispatch(setOtherUsers(originalUsers));
             setisSearch(false);
         }
     }
