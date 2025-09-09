@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiSearchAlt2, BiX } from "react-icons/bi";
 import OtherUsers from './OtherUsers';
 import axios from "axios";
