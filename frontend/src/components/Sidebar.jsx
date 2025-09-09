@@ -20,7 +20,7 @@ const Sidebar = () => {
         if (otherUsers) {
             setoriginalUsers(otherUsers);
         }
-    }, [otherUsers]);
+    }, []);
 
 
     const navigate = useNavigate();
