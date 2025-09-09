@@ -52,6 +52,7 @@ const Sidebar = () => {
         else{
             dispatch(setOtherUsers(originalUsers));
             setisSearch(false);
+            setSearch("");
         }
     }
     return (
