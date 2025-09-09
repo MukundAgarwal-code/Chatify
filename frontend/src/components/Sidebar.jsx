@@ -17,10 +17,10 @@ const Sidebar = () => {
     const [isSearch, setisSearch] = useState(false);
 
     useEffect(() => {
-        if (otherUsers) {
+        if (otherUsers && originalUsers.length == 0) {
             setoriginalUsers(otherUsers);
         }
-    }, []);
+    }, [otherUsers]);
 
 
     const navigate = useNavigate();
